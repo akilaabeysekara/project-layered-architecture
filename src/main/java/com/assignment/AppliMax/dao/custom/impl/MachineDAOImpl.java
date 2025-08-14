@@ -8,18 +8,39 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MachineDAOImpl implements MachineDAO {
+
+    // Pattern: any non-digits as prefix, then trailing digits (at least one)
+    private static final Pattern ID_PATTERN = Pattern.compile("^(?<prefix>\\D*)(?<num>\\d+)$");
+
     public String getNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("select Machine_ID from Machine order by Machine_ID desc limit 1");
+        // Limit the candidates to Machine IDs (assumed to start with 'M')
+        ResultSet rst = SQLUtil.execute("SELECT Machine_ID FROM Machine WHERE Machine_ID LIKE 'M%' ORDER BY Machine_ID DESC LIMIT 1");
 
         if (rst.next()) {
             String lastId = rst.getString(1);
-            String substring = lastId.substring(1);
-            int i = Integer.parseInt(substring);
-            int newIdIndex = i + 1;
-            return String.format("M%03d", newIdIndex);
+            Matcher matcher = ID_PATTERN.matcher(lastId);
+
+            if (matcher.matches()) {
+                String prefix = matcher.group("prefix"); // e.g., "M" or "MC"
+                String numPart = matcher.group("num");   // e.g., "005"
+                int width = numPart.length();
+
+                int current = Integer.parseInt(numPart);
+                int next = current + 1;
+
+                // Preserve zero-padding width
+                String nextNum = String.format("%0" + width + "d", next);
+                return prefix + nextNum;
+            } else {
+                // If the format is unexpected, start fresh with a default
+                return "M001";
+            }
         }
+        // No rows in table for Machine prefix
         return "M001";
     }
 
