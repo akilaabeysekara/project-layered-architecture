@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.assignment</groupId>
-    <artifactId>AppliMax</artifactId>
+    <artifactId>IJSE</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>AppliMax</name>
 
@@ -89,7 +89,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.assignment.AppliMax
+                            <mainClass>com.assignment.project
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
