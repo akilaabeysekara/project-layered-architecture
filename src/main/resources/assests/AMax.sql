@@ -171,11 +171,11 @@ INSERT INTO Project (Project_ID, Name, Start_date, End_date, Type, Status, Clien
 
 -- Employee Table
 INSERT INTO Employee (Employee_ID, Name, Phone_No, Address, Role) VALUES
-                                                                      ('E001', 'Jagath Perera', '0711111111', 'Colombo 03', 'Engineer'),
-                                                                      ('E002', 'Saman Silva', '0722222222', 'Galle 05', 'Supervisor'),
-                                                                      ('E003', 'Kamal Fernando', '0733333333', 'Kandy 02', 'Architect'),
-                                                                      ('E004', 'Nimal Jayawardena', '0744444444', 'Matara 01', 'Laborer'),
-                                                                      ('E005', 'Sunil Rajapaksha', '0755555555', 'Jaffna 04', 'Foreman');
+                                                                      ('E001', 'Jagath Perera', '0713745295', 'Colombo 03', 'Engineer'),
+                                                                      ('E002', 'Saman Silva', '0729687463', 'Galle 05', 'Supervisor'),
+                                                                      ('E003', 'Kamal Fernando', '0772634168', 'Kandy 02', 'Architect'),
+                                                                      ('E004', 'Nimal Jayawardena', '0742418258', 'Matara 01', 'Laborer'),
+                                                                      ('E005', 'Sunil Rajapaksha', '0758679457', 'Jaffna 04', 'Foreman');
 
 -- EmployeeDetails Table
 INSERT INTO EmployeeDetails (Project_ID, Work_date, Work_Day_Count, Employee_ID) VALUES
@@ -243,11 +243,11 @@ INSERT INTO MachineDetails (Project_ID, Machine_ID) VALUES
 
 -- Supplier Table
 INSERT INTO Supplier (Supplier_ID, Name, Address, Phone_No, Email) VALUES
-                                                                       ('S001', 'Supreme Cement', 'Colombo 07', '0711111111', 'cement@supreme.com'),
-                                                                       ('S002', 'SteelWorks Ltd', 'Galle 03', '0722222222', 'steel@works.com'),
-                                                                       ('S003', 'Sand Suppliers', 'Matara 02', '0733333333', 'sand@supplier.com'),
-                                                                       ('S004', 'Brick Factory', 'Kandy 05', '0744444444', 'brick@factory.com'),
-                                                                       ('S005', 'Paints Lanka', 'Jaffna 01', '0755555555', 'paint@lanka.com');
+                                                                       ('S001', 'Supreme Cement', 'Colombo 07', '0712312467', 'cement@supreme.com'),
+                                                                       ('S002', 'SteelWorks Ltd', 'Galle 03', '0723212758', 'steel@works.com'),
+                                                                       ('S003', 'Sand Suppliers', 'Matara 02', '0716745368', 'sand@supplier.com'),
+                                                                       ('S004', 'Brick Factory', 'Kandy 05', '0773408968', 'brick@factory.com'),
+                                                                       ('S005', 'Paints Lanka', 'Jaffna 01', '0758567930', 'paint@lanka.com');
 
 -- MaterialBuy Table
 INSERT INTO MaterialBuy (Payment_ID, Material_ID, Supplier_ID, Date, Unit_Amount, Quantity, Total_Price) VALUES
