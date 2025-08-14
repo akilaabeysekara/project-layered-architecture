@@ -18,9 +18,9 @@ public class MaterialBuyDAOImpl implements MaterialBuyDAO {
             String substring = lastId.substring(1);
             int i = Integer.parseInt(substring);
             int newIdIndex = i + 1;
-            return String.format("B%03d", newIdIndex);
+            return String.format("MB%03d", newIdIndex);
         }
-        return "B001";
+        return "MB001";
     }
 
     @Override
