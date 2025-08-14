@@ -19,7 +19,7 @@ public class AppInitializer extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/OpenPage.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
-            stage.setTitle("AppliMax");
+            stage.setTitle("Construction Management System");
             stage.setScene(scene);
             stage.setMinWidth(1300);
             stage.setMinHeight(600);
