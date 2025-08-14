@@ -23,6 +23,9 @@ public class MaterialUsageBOImpl implements MaterialUsageBO {
     @Override
     public MaterialUsageDto findByMaterialUsageId(String selectedId) throws SQLException {
         MaterialUsage materialUsage = materialUsageDAO.findById(selectedId);
+        if (materialUsage == null) {
+            return null;
+        }
         return new MaterialUsageDto(materialUsage.getUsageId(), materialUsage.getProjectId(), materialUsage.getMaterialId(), materialUsage.getQuantityUsed(), materialUsage.getDate());
     }
 
