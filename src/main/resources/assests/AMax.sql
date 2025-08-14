@@ -10,7 +10,7 @@ CREATE TABLE User
 );
 
 INSERT INTO `User` (email, password)
-VALUES ('akila2024e@gmail.com', '3938093');
+VALUES ('akila@gmail.com', '3938093');
 
 -- Client Table 
 CREATE TABLE Client
