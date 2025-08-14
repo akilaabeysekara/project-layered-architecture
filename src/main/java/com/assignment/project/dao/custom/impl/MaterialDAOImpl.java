@@ -18,9 +18,9 @@ public class MaterialDAOImpl implements MaterialDAO {
             String substring = lastId.substring(2);
             int i = Integer.parseInt(substring);
             int newIdIndex = i + 1;
-            return String.format("MA%02d", newIdIndex);
+            return String.format("MA%03d", newIdIndex);
         }
-        return "MA01";
+        return "MA001";
     }
 
     public ArrayList<String> getAllIds() throws SQLException {

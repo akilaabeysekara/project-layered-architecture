@@ -18,9 +18,9 @@ public class MaterialUsageDAOImpl implements MaterialUsageDAO {
             String substring = lastId.substring(1);
             int i = Integer.parseInt(substring);
             int newIdIndex = i + 1;
-            return String.format("U%03d", newIdIndex);
+            return String.format("MU%03d", newIdIndex);
         }
-        return "U001";
+        return "MU001";
     }
 
     @Override
