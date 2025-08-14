@@ -155,11 +155,11 @@ CREATE TABLE Report (
 
 -- Client Table
 INSERT INTO Client (Client_ID, Name, Address, Phone_No, Email) VALUES
-                                                                   ('C001', 'ABC Constructions', '123 Main St, Galle', '0771234567', 'abc@construction.com'),
-                                                                   ('C002', 'XYZ Developers', '45 Park Rd, Colombo', '0712345678', 'xyz@developers.com'),
-                                                                   ('C003', 'Delta Builders', '78 Lake Ave, Kandy', '0723456789', 'delta@builders.com'),
-                                                                   ('C004', 'Omega Engineers', '9 River St, Jaffna', '0754567890', 'omega@engineers.com'),
-                                                                   ('C005', 'Sigma Designs', '56 Hill Rd, Matara', '0705678901', 'sigma@designs.com');
+                                                                   ('C001', 'Chamath Dilshan', '123 Main St, Galle', '0771234567', 'chamath@gmail.com'),
+                                                                   ('C002', 'Nadeesha Fernando', '45 Park Rd, Colombo', '0712345678', 'nadeesha323@gmail.com'),
+                                                                   ('C003', 'Tharindu Silva', '78 Lake Ave, Kandy', '0723456789', 'tharindu@gmail.com'),
+                                                                   ('C004', 'Ishara Wijesinghe', '9 River St, Jaffna', '0754567890', 'ishara92@gmail.com'),
+                                                                   ('C005', 'Sanduni Jayasinghe', '56 Hill Rd, Matara', '0705678901', 'sanduni98@gmail.com');
 
 -- Project Table
 INSERT INTO Project (Project_ID, Name, Start_date, End_date, Type, Status, Client_ID) VALUES
