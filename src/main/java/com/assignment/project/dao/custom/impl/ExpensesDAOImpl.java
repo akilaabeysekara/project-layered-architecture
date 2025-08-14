@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExpensesDAOImpl implements ExpensesDAO {
+    @Override
     public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("select Expense_ID from Expenses order by Expense_ID desc limit 1");
 
@@ -18,11 +19,12 @@ public class ExpensesDAOImpl implements ExpensesDAO {
             String substring = lastId.substring(2);
             int i = Integer.parseInt(substring);
             int newIdIndex = i + 1;
-            return String.format("EX%02d", newIdIndex);
+            return String.format("EX%03d", newIdIndex);
         }
-        return "EX01";
+        return "EX001";
     }
 
+    @Override
     public ArrayList<String> getAllIds() throws SQLException {
         ResultSet rst = SQLUtil.execute("select Expense_ID from Expenses");
         ArrayList<String> expensesIds = new ArrayList<>();
@@ -33,9 +35,10 @@ public class ExpensesDAOImpl implements ExpensesDAO {
         return expensesIds;
     }
 
+    @Override
     public Expenses findById(String selectedExpenseId) throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from Expenses where Expense_ID=?", selectedExpenseId);
-        if (rst.next()){
+        if (rst.next()) {
             return new Expenses(
                     rst.getString(1),
                     rst.getString(2),
@@ -48,6 +51,7 @@ public class ExpensesDAOImpl implements ExpensesDAO {
         return null;
     }
 
+    @Override
     public boolean save(Expenses entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into Expenses values (?,?,?,?,?,?)",
@@ -60,6 +64,7 @@ public class ExpensesDAOImpl implements ExpensesDAO {
         );
     }
 
+    @Override
     public boolean update(Expenses entity) throws SQLException {
         return SQLUtil.execute(
                 "update Expenses set Type=?, Amount=?, Date=?, Project_ID=?, Employee_ID=? where Expense_ID=?",
@@ -72,15 +77,14 @@ public class ExpensesDAOImpl implements ExpensesDAO {
         );
     }
 
+    @Override
     public boolean delete(String expenseId) throws SQLException {
-//        String sql = "DELETE FROM Expenses WHERE Expense_ID=?";
-//        return CrudUtil.execute(sql, expenseId);
-
         return SQLUtil.execute(
                 "DELETE FROM Expenses WHERE Expense_ID=?", expenseId
         );
     }
 
+    @Override
     public List<Expenses> getAll() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM Expenses");
         List<Expenses> expensesList = new ArrayList<>();

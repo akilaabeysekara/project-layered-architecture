@@ -8,17 +8,35 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MaterialBuyDAOImpl implements MaterialBuyDAO {
+
+    private static final Pattern TRAILING_DIGITS = Pattern.compile("(\\d+)$");
+
     @Override
     public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT Payment_ID FROM MaterialBuy ORDER BY Payment_ID DESC LIMIT 1");
         if (rst.next()) {
             String lastId = rst.getString(1);
-            String substring = lastId.substring(1);
-            int i = Integer.parseInt(substring);
-            int newIdIndex = i + 1;
-            return String.format("MB%03d", newIdIndex);
+            if (lastId == null || lastId.isBlank()) {
+                return "MB001";
+            }
+            lastId = lastId.trim();
+
+            Matcher matcher = TRAILING_DIGITS.matcher(lastId);
+            String prefix = lastId.replaceAll("\\d", "");
+            int nextIndex = 1;
+
+            if (matcher.find()) {
+                String digits = matcher.group(1);
+                // Preserve actual prefix before the trailing digits
+                prefix = lastId.substring(0, lastId.length() - digits.length());
+                nextIndex = Integer.parseInt(digits) + 1;
+            }
+
+            return String.format("%s%03d", prefix, nextIndex);
         }
         return "MB001";
     }

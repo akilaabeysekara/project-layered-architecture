@@ -8,17 +8,33 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MaterialUsageDAOImpl implements MaterialUsageDAO {
+    private static final Pattern TRAILING_DIGITS = Pattern.compile("(\\d+)$");
+
     @Override
     public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT Usage_ID FROM MaterialUsage ORDER BY Usage_ID DESC LIMIT 1");
         if (rst.next()) {
             String lastId = rst.getString(1);
-            String substring = lastId.substring(1);
-            int i = Integer.parseInt(substring);
-            int newIdIndex = i + 1;
-            return String.format("MU%03d", newIdIndex);
+            if (lastId == null || lastId.isBlank()) {
+                return "MU001";
+            }
+            lastId = lastId.trim();
+
+            Matcher matcher = TRAILING_DIGITS.matcher(lastId);
+            String prefix = lastId.replaceAll("\\d", "");
+            int nextIndex = 1;
+
+            if (matcher.find()) {
+                String digits = matcher.group(1);
+                prefix = lastId.substring(0, lastId.length() - digits.length());
+                nextIndex = Integer.parseInt(digits) + 1;
+            }
+
+            return String.format("%s%03d", prefix, nextIndex);
         }
         return "MU001";
     }
@@ -40,7 +56,7 @@ public class MaterialUsageDAOImpl implements MaterialUsageDAO {
 
     @Override
     public ArrayList<String> getAllIds() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT Usage_ID FROM MaterialUsage");
+        ResultSet rst = SQLUtil.execute("SELECT Usage_ID FROM MaterialUsage ORDER BY Usage_ID");
         ArrayList<String> ids = new ArrayList<>();
         while (rst.next()) {
             ids.add(rst.getString(1));
@@ -51,7 +67,7 @@ public class MaterialUsageDAOImpl implements MaterialUsageDAO {
     @Override
     public boolean save(MaterialUsage entity) throws SQLException {
         return SQLUtil.execute(
-                "INSERT INTO MaterialUsage VALUES (?,?,?,?,?)",
+                "INSERT INTO MaterialUsage (Usage_ID, Project_ID, Material_ID, Quantity_used, Date) VALUES (?,?,?,?,?)",
                 entity.getUsageId(),
                 entity.getProjectId(),
                 entity.getMaterialId(),
@@ -74,7 +90,7 @@ public class MaterialUsageDAOImpl implements MaterialUsageDAO {
 
     @Override
     public List<MaterialUsage> getAll() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT * FROM MaterialUsage");
+        ResultSet rst = SQLUtil.execute("SELECT * FROM MaterialUsage ORDER BY Usage_ID");
         List<MaterialUsage> usageList = new ArrayList<>();
         while (rst.next()) {
             usageList.add(new MaterialUsage(
@@ -105,7 +121,7 @@ public class MaterialUsageDAOImpl implements MaterialUsageDAO {
     @Override
     public boolean updateMaterialStock(String materialId, int quantity) throws SQLException {
         return SQLUtil.execute(
-                "UPDATE Material SET Quantity_in_Stock = Quantity_in_Stock + ? WHERE Material_ID = ?",
+                "UPDATE Material SET Quantity_in_Stock = GREATEST(0, Quantity_in_Stock + ?) WHERE Material_ID = ?",
                 quantity,
                 materialId
         );
