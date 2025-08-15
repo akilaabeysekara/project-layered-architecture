@@ -1,4 +1,4 @@
-package com.assignment.project.view.tdm;
+package com.assignment.project.dto.tm;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SupplierTM {
-    private String supplierId;
+public class MachineTM {
+    private String machineId;
     private String name;
-    private String address;
-    private String phoneNo;
-    private String email;
+    private String status;
+    private String description;
 }

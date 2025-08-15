@@ -1,4 +1,4 @@
-package com.assignment.project.view.tdm;
+package com.assignment.project.dto.tm;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MaterialTM {
+public class MaterialUsageTM {
+    private String usageId;
+    private String projectId;
     private String materialId;
-    private String name;
-    private String qty;
-    private String unit;
+    private String quantityUsed;
+    private String date;
 }

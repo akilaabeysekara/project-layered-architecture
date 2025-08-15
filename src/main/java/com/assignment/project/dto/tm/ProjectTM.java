@@ -1,4 +1,4 @@
-package com.assignment.project.view.tdm;
+package com.assignment.project.dto.tm;
 
 import lombok.*;
 
