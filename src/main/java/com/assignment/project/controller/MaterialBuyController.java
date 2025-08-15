@@ -5,7 +5,7 @@ import com.assignment.project.bo.custom.MaterialBO;
 import com.assignment.project.bo.custom.MaterialBuyBO;
 import com.assignment.project.bo.custom.SupplierBO;
 import com.assignment.project.dto.MaterialBuyDto;
-import com.assignment.project.view.tdm.MaterialBuyTM;
+import com.assignment.project.dto.tm.MaterialBuyTM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;

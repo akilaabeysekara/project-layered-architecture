@@ -3,7 +3,7 @@ package com.assignment.project.controller;
 import com.assignment.project.bo.BOFactory;
 import com.assignment.project.bo.custom.MaterialBO;
 import com.assignment.project.dto.MaterialDto;
-import com.assignment.project.view.tdm.MaterialTM;
+import com.assignment.project.dto.tm.MaterialTM;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

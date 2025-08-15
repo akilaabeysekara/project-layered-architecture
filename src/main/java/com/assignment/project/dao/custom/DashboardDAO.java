@@ -1,7 +1,7 @@
 package com.assignment.project.dao.custom;
 
 import com.assignment.project.dao.CrudDAO;
-import com.assignment.project.view.tdm.ProjectExpensesTM;
+import com.assignment.project.dto.tm.ProjectExpensesTM;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

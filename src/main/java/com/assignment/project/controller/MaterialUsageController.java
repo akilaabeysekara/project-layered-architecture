@@ -5,7 +5,7 @@ import com.assignment.project.bo.custom.MaterialBO;
 import com.assignment.project.bo.custom.MaterialUsageBO;
 import com.assignment.project.bo.custom.ProjectBO;
 import com.assignment.project.dto.MaterialUsageDto;
-import com.assignment.project.view.tdm.MaterialUsageTM;
+import com.assignment.project.dto.tm.MaterialUsageTM;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;

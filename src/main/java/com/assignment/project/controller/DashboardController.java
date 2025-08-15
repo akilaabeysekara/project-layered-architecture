@@ -2,7 +2,7 @@ package com.assignment.project.controller;
 
 import com.assignment.project.dao.custom.ClientDAO;
 import com.assignment.project.dao.custom.DashboardDAO;
-import com.assignment.project.view.tdm.ProjectExpensesTM;
+import com.assignment.project.dto.tm.ProjectExpensesTM;
 import com.assignment.project.dao.custom.impl.ClientDAOImpl;
 import com.assignment.project.dao.custom.impl.DashboardDAOImpl;
 import com.jfoenix.controls.JFXListView;

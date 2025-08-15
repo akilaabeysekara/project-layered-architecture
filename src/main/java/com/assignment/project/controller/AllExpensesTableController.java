@@ -3,7 +3,7 @@ package com.assignment.project.controller;
 import com.assignment.project.bo.BOFactory;
 import com.assignment.project.bo.custom.ExpensesBO;
 import com.assignment.project.dto.ExpensesDto;
-import com.assignment.project.view.tdm.ExpensesTM;
+import com.assignment.project.dto.tm.ExpensesTM;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

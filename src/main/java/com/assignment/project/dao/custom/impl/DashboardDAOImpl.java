@@ -1,7 +1,7 @@
 package com.assignment.project.dao.custom.impl;
 
 import com.assignment.project.dao.custom.DashboardDAO;
-import com.assignment.project.view.tdm.ProjectExpensesTM;
+import com.assignment.project.dto.tm.ProjectExpensesTM;
 import com.assignment.project.dao.SQLUtil;
 
 import java.sql.ResultSet;
