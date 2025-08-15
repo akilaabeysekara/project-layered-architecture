@@ -7,7 +7,7 @@
     <groupId>com.assignment</groupId>
     <artifactId>IJSE</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>AppliMax</name>
+    <name>project</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
