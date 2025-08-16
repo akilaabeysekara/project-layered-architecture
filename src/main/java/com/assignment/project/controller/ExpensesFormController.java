@@ -1,6 +1,8 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
+
 import com.assignment.project.bo.custom.EmployeeBO;
 import com.assignment.project.bo.custom.ExpensesBO;
 import com.assignment.project.bo.custom.ProjectBO;
@@ -82,9 +84,9 @@ public class ExpensesFormController implements Initializable {
     @FXML
     private JFXTextField txtExpensesDate;
 
-    ExpensesBO expensesBO = (ExpensesBO) BOFactory.getInstance().getBO(BOFactory.BOType.EXPENSES);
-    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOFactory.BOType.EMPLOYEE);
-    ProjectBO projectBO = (ProjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.PROJECT);
+    ExpensesBO expensesBO = (ExpensesBO) BOFactory.getInstance().getBO(BOTypes.EXPENSES);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOTypes.EMPLOYEE);
+    ProjectBO projectBO = (ProjectBO) BOFactory.getInstance().getBO(BOTypes.PROJECT);
 //    ExpensesDAO expensesDAO = new ExpensesDAOImpl();
 //    EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 //    ProjectDAO projectDAO = new ProjectDAOImpl();
@@ -96,7 +98,7 @@ public class ExpensesFormController implements Initializable {
             lblExpenseEmployeeName.setText(employeeBO.getEmployeeName(selectedEmployeeId));
             lblExpenseEmployeeRole.setText(employeeBO.getEmployeeRole(selectedEmployeeId));
         }
-        btnExpensesSave.setDisable(true);
+        // Removed unnecessary disabling here; checkComboBoxSelection() will handle the state
 
         checkComboBoxSelection();
     }
@@ -144,7 +146,7 @@ public class ExpensesFormController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this expense?", ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> buttonType = alert.showAndWait();
 
-            if(buttonType.get() == ButtonType.YES){
+            if(buttonType.isPresent() && buttonType.get() == ButtonType.YES){
                 boolean isDeleted = expensesBO.deleteExpenses(expenseId);
 
                 if (isDeleted) {
@@ -156,7 +158,7 @@ public class ExpensesFormController implements Initializable {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Error occurred while deleting material.").show();
+            new Alert(Alert.AlertType.ERROR, "Error occurred while deleting expense.").show();
         }
     }
 
@@ -174,8 +176,12 @@ public class ExpensesFormController implements Initializable {
         String projectId = cmbProjectIdExpense.getSelectionModel().getSelectedItem();
         String employeeId = cmbEmployeeIdExpense.getSelectionModel().getSelectedItem();
 
-        if (amountText.isEmpty() || date.isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Amount and Type must not be empty!").show();
+        if (type.isEmpty() || amountText.isEmpty() || date.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Type, Amount and Date must not be empty!").show();
+            return;
+        }
+        if (projectId == null || employeeId == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select both Employee and Project.").show();
             return;
         }
 
@@ -211,8 +217,12 @@ public class ExpensesFormController implements Initializable {
         String projectId = cmbProjectIdExpense.getSelectionModel().getSelectedItem();
         String employeeId = cmbEmployeeIdExpense.getSelectionModel().getSelectedItem();
 
-        if (amountText.isEmpty() || date.isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Amount and Type must not be empty!").show();
+        if (type.isEmpty() || amountText.isEmpty() || date.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Type, Amount and Date must not be empty!").show();
+            return;
+        }
+        if (projectId == null || employeeId == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select both Employee and Project.").show();
             return;
         }
 
@@ -294,7 +304,6 @@ public class ExpensesFormController implements Initializable {
 
     private void refreshPage() throws SQLException {
         String nextExpensesId = expensesBO.getNextExpensesId();
-        lblExpenseID.setText(nextExpensesId);
 
         loadExpensesIds();
         loadEmployeeIds();
@@ -306,11 +315,11 @@ public class ExpensesFormController implements Initializable {
         lblExpenseEmployeeName.setText("");
         lblExpenseProjectName.setText("");
         lblExpenseEmployeeRole.setText("");
-        lblExpenseID.setText("");
         txtExpenseType.clear();
         txtExpensesAmount.clear();
         txtExpensesDate.clear();
         resetFieldStyles();
+
         lblExpenseID.setText(nextExpensesId);
         txtExpensesDate.setText(LocalDate.now().toString());
 

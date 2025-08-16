@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.MaterialBO;
 import com.assignment.project.bo.custom.MaterialBuyBO;
 import com.assignment.project.bo.custom.SupplierBO;
@@ -105,9 +106,9 @@ public class MaterialBuyController implements Initializable {
     @FXML
     private Label lblUnitLoadBuy;
 
-    MaterialBuyBO materialBuyBO = (MaterialBuyBO) BOFactory.getInstance().getBO(BOFactory.BOType.MATERIALBUY);
-    MaterialBO materialBO = (MaterialBO) BOFactory.getInstance().getBO(BOFactory.BOType.MATERIAL);
-    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLIER);
+    MaterialBuyBO materialBuyBO = (MaterialBuyBO) BOFactory.getInstance().getBO(BOTypes.MATERIALBUY);
+    MaterialBO materialBO = (MaterialBO) BOFactory.getInstance().getBO(BOTypes.MATERIAL);
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOTypes.SUPPLIER);
 //    MaterialBuyDAO materialBuyDAO = new MaterialBuyDAOImpl();
 //    MaterialDAO materialDAO = new MaterialDAOImpl();
 //    SupplierDAO supplierDAO = new SupplierDAOImpl();

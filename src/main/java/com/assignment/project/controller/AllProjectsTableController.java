@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.ProjectBO;
 import com.assignment.project.dto.ProjectDto;
 import com.assignment.project.dto.tm.ProjectTM;
@@ -46,7 +47,7 @@ public class AllProjectsTableController {
     @FXML
     private TableView<ProjectDto> tblProjects;
 
-    ProjectBO projectBO = (ProjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.PROJECT);
+    ProjectBO projectBO = (ProjectBO) BOFactory.getInstance().getBO(BOTypes.PROJECT);
 
     public void initialize(){
         colClientId.setCellValueFactory(new PropertyValueFactory<>("projectId"));

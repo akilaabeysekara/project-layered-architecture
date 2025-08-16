@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.EmployeeBO;
 import com.assignment.project.dto.EmployeeDto;
 import com.assignment.project.dto.tm.EmployeeTM;
@@ -44,7 +45,7 @@ public class AllEmployeeTableController {
     @FXML
     private TableView<EmployeeDto> tblEmployee;
 
-    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOFactory.BOType.EMPLOYEE);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOTypes.EMPLOYEE);
 
     public void initialize(){
         colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));

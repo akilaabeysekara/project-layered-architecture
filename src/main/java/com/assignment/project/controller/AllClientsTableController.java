@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.ClientBO;
 import com.assignment.project.dto.ClientDto;
 import com.jfoenix.controls.JFXButton;
@@ -18,7 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class AllClientsTableController {
-    ClientBO clientBO = (ClientBO) BOFactory.getInstance().getBO(BOFactory.BOType.CLIENT);
+    ClientBO clientBO = (ClientBO) BOFactory.getInstance().getBO(BOTypes.CLIENT);
 
     @FXML
     private AnchorPane clientTablePane;

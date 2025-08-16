@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.SupplierBO;
 import com.assignment.project.dto.SupplierDto;
 import com.assignment.project.dto.tm.SupplierTM;
@@ -43,7 +44,7 @@ public class AllSupplierTableController {
     @FXML
     private TableView<SupplierDto> tblSuppliers;
 
-    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLIER);
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOTypes.SUPPLIER);
 
     public void initialize(){
         colSupplierId.setCellValueFactory(new PropertyValueFactory<>("supplierId"));

@@ -13,11 +13,7 @@ public class BOFactory {
         return boFactory==null?boFactory=new BOFactory():boFactory;
     }
 
-    public enum BOType {
-        CLIENT, EMPLOYEE, EXPENSES, MACHINE, MATERIALBUY, MATERIAL, MATERIALUSAGE, PAYMENT, PROJECT, SUPPLIER, USER
-    }
-
-    public SuperBO getBO(BOType type) {
+    public SuperBO getBO(BOTypes type) {
         switch (type) {
             case CLIENT:
                 return new ClientBOImpl();

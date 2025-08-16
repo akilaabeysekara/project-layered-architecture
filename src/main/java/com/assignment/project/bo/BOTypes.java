@@ -1,0 +1,5 @@
+package com.assignment.project.bo;
+
+public enum BOTypes {
+    CLIENT, EMPLOYEE, EXPENSES, MACHINE, MATERIALBUY, MATERIAL, MATERIALUSAGE, PAYMENT, PROJECT, SUPPLIER, USER
+}

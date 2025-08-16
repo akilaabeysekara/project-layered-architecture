@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.SupplierBO;
 import com.assignment.project.dto.SupplierDto;
 import com.jfoenix.controls.JFXButton;
@@ -29,7 +30,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SupplierFormController implements Initializable {
-    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUPPLIER);
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOTypes.SUPPLIER);
 //    SupplierDAOImpl supplierDAOImpl = new SupplierDAOImpl();
 
     @FXML

@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.EmployeeBO;
 import com.assignment.project.dto.EmployeeDto;
 import com.jfoenix.controls.JFXButton;
@@ -29,7 +30,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EmployeeFormController implements Initializable {
-    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOFactory.BOType.EMPLOYEE);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOTypes.EMPLOYEE);
 
     @FXML
     private JFXButton btnEmployeeDelete;

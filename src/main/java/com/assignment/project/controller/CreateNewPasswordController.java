@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.UserBO;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -18,7 +19,7 @@ import java.io.IOException;
 
 public class CreateNewPasswordController {
 
-    UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOTypes.USER);
 //    UserDAO userDAO = new UserDAOImpl();
 
     @FXML
@@ -38,7 +39,7 @@ public class CreateNewPasswordController {
         String newPassword = txtNewPassword.getText().trim();
         String confirmPassword = txtConfirmPassword.getText().trim();
 
-        if (!newPassword.equals(confirmPassword)){
+        if (!newPassword.equals(confirmPassword)) {
             showAlert("Error", "Passwords do not match.");
         } else if (userBO.updatePassword(ForgotPasswordController.userEmail, newPassword)) {
             showAlert("Success", "Password updated successfully!");
@@ -59,7 +60,7 @@ public class CreateNewPasswordController {
         alert.show();
     }
 
-    private void loadResetPasswordForm(){
+    private void loadResetPasswordForm() {
         try {
             newPasswordPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource("/view/PasswordChanged.fxml"));

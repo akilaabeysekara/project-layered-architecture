@@ -2,6 +2,7 @@ package com.assignment.project.controller;
 
 import com.assignment.project.AppInitializer;
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.UserBO;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -48,7 +49,7 @@ public class LoginFormController {
             alert.setContentText("Failed to load ForgotPasswordForm!");
         }
     }
-    UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOTypes.USER);
 //    UserDAO userDAO = new UserDAOImpl();
 
     @FXML

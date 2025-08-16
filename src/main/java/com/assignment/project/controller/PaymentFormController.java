@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.PaymentBO;
 import com.assignment.project.dto.PaymentDto;
 import com.jfoenix.controls.JFXButton;
@@ -32,7 +33,7 @@ import java.util.ResourceBundle;
 
 public class PaymentFormController implements Initializable {
 
-    PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBO(BOTypes.PAYMENT);
 
     @FXML
     private Button btnAllPayment;

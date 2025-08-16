@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.MaterialBO;
 import com.assignment.project.bo.custom.MaterialUsageBO;
 import com.assignment.project.bo.custom.ProjectBO;
@@ -28,9 +29,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MaterialUsageController implements Initializable {
-    MaterialUsageBO materialUsageBO = (MaterialUsageBO) BOFactory.getInstance().getBO(BOFactory.BOType.MATERIALUSAGE);
-    ProjectBO projectBO = (ProjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.PROJECT);
-    MaterialBO materialBO = (MaterialBO) BOFactory.getInstance().getBO(BOFactory.BOType.MATERIAL);
+    MaterialUsageBO materialUsageBO = (MaterialUsageBO) BOFactory.getInstance().getBO(BOTypes.MATERIALUSAGE);
+    ProjectBO projectBO = (ProjectBO) BOFactory.getInstance().getBO(BOTypes.PROJECT);
+    MaterialBO materialBO = (MaterialBO) BOFactory.getInstance().getBO(BOTypes.MATERIAL);
 
 //    MaterialUsageDAO materialUsageDAO = new MaterialUsageDAOImpl();
 //    ProjectDAO projectDAO = new ProjectDAOImpl();

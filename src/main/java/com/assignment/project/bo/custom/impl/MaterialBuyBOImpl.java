@@ -6,6 +6,7 @@ import com.assignment.project.dao.custom.MaterialBuyDAO;
 import com.assignment.project.db.DBConnection;
 import com.assignment.project.entity.MaterialBuy;
 import com.assignment.project.dto.MaterialBuyDto;
+import com.assignment.project.bo.util.EntityDTOConverter;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ public class MaterialBuyBOImpl implements MaterialBuyBO {
 
     private static final Pattern TRAILING_DIGITS = Pattern.compile("(\\d+)$");
     private final MaterialBuyDAO materialBuyDAO = (MaterialBuyDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.MATERIALBUY);
+    private final EntityDTOConverter converter = new EntityDTOConverter();
 
     @Override
     public String getNextMaterialBuyId() throws SQLException {
@@ -63,7 +65,7 @@ public class MaterialBuyBOImpl implements MaterialBuyBO {
         List<MaterialBuy> all = materialBuyDAO.getAll();
         List<MaterialBuyDto> materialBuyDtos = new ArrayList<>();
         for (MaterialBuy materialBuy : all) {
-            materialBuyDtos.add(convertToDto(materialBuy));
+            materialBuyDtos.add(converter.getMaterialBuyDto(materialBuy));
         }
         return materialBuyDtos;
     }
@@ -75,7 +77,7 @@ public class MaterialBuyBOImpl implements MaterialBuyBO {
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
 
-            MaterialBuy materialBuy = convertToEntity(dto);
+            MaterialBuy materialBuy = converter.getMaterialBuy(dto);
             boolean isSaved = materialBuyDAO.save(materialBuy);
 
             if (!isSaved) {
@@ -108,7 +110,7 @@ public class MaterialBuyBOImpl implements MaterialBuyBO {
 
     @Override
     public boolean updateMaterialBuy(MaterialBuyDto dto) throws SQLException {
-        MaterialBuy materialBuy = convertToEntity(dto);
+        MaterialBuy materialBuy = converter.getMaterialBuy(dto);
         return materialBuyDAO.update(materialBuy);
     }
 

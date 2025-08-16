@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.ProjectBO;
 import com.assignment.project.dto.ProjectDto;
 import com.jfoenix.controls.JFXButton;
@@ -30,7 +31,7 @@ import java.util.ResourceBundle;
 
 public class ProjectFormController implements Initializable {
 
-    ProjectBO projectBO = (ProjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.PROJECT);
+    ProjectBO projectBO = (ProjectBO) BOFactory.getInstance().getBO(BOTypes.PROJECT);
 //    ProjectDAO projectDAO = new ProjectDAOImpl();
 
     @FXML

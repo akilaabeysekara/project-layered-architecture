@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.UserBO;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -22,7 +23,7 @@ import java.util.Properties;
 import java.util.Random;
 
 public class ForgotPasswordController {
-    UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOTypes.USER);
 //    UserDAO userDAO = new UserDAOImpl();
     static String userEmail;
     static String OTP;

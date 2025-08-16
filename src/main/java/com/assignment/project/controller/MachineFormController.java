@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.MachineBO;
 import com.assignment.project.dto.MachineDto;
 import com.jfoenix.controls.JFXButton;
@@ -29,7 +30,7 @@ import java.util.ResourceBundle;
 
 public class MachineFormController implements Initializable {
 
-    MachineBO machineBO = (MachineBO) BOFactory.getInstance().getBO(BOFactory.BOType.MACHINE);
+    MachineBO machineBO = (MachineBO) BOFactory.getInstance().getBO(BOTypes.MACHINE);
 //    MachineDAO machineDAO = new MachineDAOImpl();
 
     @FXML

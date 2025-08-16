@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.PaymentBO;
 import com.assignment.project.dto.PaymentDto;
 import com.assignment.project.dto.tm.PaymentTM;
@@ -44,7 +45,7 @@ public class AllPaymentTableController {
     @FXML
     private TableView<PaymentDto> tblPayment;
 
-    PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBO(BOTypes.PAYMENT);
 
     public void initialize(){
         colPaymentId.setCellValueFactory(new PropertyValueFactory<>("paymentID"));

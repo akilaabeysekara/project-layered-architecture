@@ -1,6 +1,9 @@
 package com.assignment.project.bo.custom.impl;
 
 import com.assignment.project.bo.custom.ClientBO;
+import com.assignment.project.bo.exception.DuplicateException;
+import com.assignment.project.bo.exception.InUseException;
+import com.assignment.project.bo.exception.NotFoundException;
 import com.assignment.project.dao.DAOFactory;
 import com.assignment.project.dao.custom.impl.ClientDAOImpl;
 import com.assignment.project.dto.ClientDto;
@@ -14,10 +17,20 @@ public class ClientBOImpl implements ClientBO {
     ClientDAOImpl clientDAO = (ClientDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.CLIENT);
 
     public boolean saveClient(ClientDto clientDto) throws SQLException{
+        // Check for duplicate client ID before saving
+        Client existing = clientDAO.findById(clientDto.getId());
+        if (existing != null) {
+            throw new DuplicateException("Client with id " + clientDto.getId() + " already exists");
+        }
         return clientDAO.save(new Client(clientDto.getId(), clientDto.getName(), clientDto.getAddress(), clientDto.getPhoneNo(), clientDto.getEmail()));
     }
 
     public boolean updateClient(ClientDto clientDto) throws SQLException{
+        // Ensure client exists before update
+        Client existing = clientDAO.findById(clientDto.getId());
+        if (existing == null) {
+            throw new NotFoundException("Client not found");
+        }
         return clientDAO.update(new Client(clientDto.getId(), clientDto.getName(), clientDto.getAddress(), clientDto.getPhoneNo(), clientDto.getEmail()));
     }
 
@@ -27,6 +40,9 @@ public class ClientBOImpl implements ClientBO {
 
     public ClientDto findByClientId(String selectedId) throws SQLException{
         Client client = clientDAO.findById(selectedId);
+        if (client == null) {
+            throw new NotFoundException("Client not found");
+        }
         return new ClientDto(client.getId(), client.getName(), client.getAddress(), client.getPhoneNo(), client.getEmail());
     }
 
@@ -35,7 +51,18 @@ public class ClientBOImpl implements ClientBO {
     }
 
     public boolean deleteClient(String ID) throws SQLException {
-        return clientDAO.delete(ID);
+        // Ensure client exists first
+        Client existing = clientDAO.findById(ID);
+        if (existing == null) {
+            throw new NotFoundException("Client not found");
+        }
+
+        // Try delete; if DAO reports failure, treat as "in use"
+        boolean deleted = clientDAO.delete(ID);
+        if (!deleted) {
+            throw new InUseException("Client is in use and cannot be deleted");
+        }
+        return true;
     }
 
     public List<ClientDto> getAllClient() throws SQLException {

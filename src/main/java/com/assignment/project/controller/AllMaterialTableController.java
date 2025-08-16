@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.MaterialBO;
 import com.assignment.project.dto.MaterialDto;
 import com.assignment.project.dto.tm.MaterialTM;
@@ -15,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import java.util.List;
 
 public class AllMaterialTableController {
-    MaterialBO materialBO = (MaterialBO) BOFactory.getInstance().getBO(BOFactory.BOType.MATERIAL);
+    MaterialBO materialBO = (MaterialBO) BOFactory.getInstance().getBO(BOTypes.MATERIAL);
 
     @FXML
     private TableColumn<MaterialTM, String> colMaterialId;

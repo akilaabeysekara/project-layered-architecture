@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.MachineBO;
 import com.assignment.project.dto.MachineDto;
 import com.assignment.project.dto.tm.MachineTM;
@@ -42,7 +43,7 @@ public class AllMachinesTableController {
     private TableView<MachineDto> tblMachines;
 
 //    MachineDAO machineDAO = new MachineDAOImpl();
-    MachineBO machineBO = (MachineBO) BOFactory.getInstance().getBO(BOFactory.BOType.MACHINE);
+    MachineBO machineBO = (MachineBO) BOFactory.getInstance().getBO(BOTypes.MACHINE);
 
     public void initialize(){
         colMachineId.setCellValueFactory(new PropertyValueFactory<>("machineId"));

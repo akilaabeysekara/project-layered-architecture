@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.ExpensesBO;
 import com.assignment.project.dto.ExpensesDto;
 import com.assignment.project.dto.tm.ExpensesTM;
@@ -47,7 +48,7 @@ public class AllExpensesTableController {
     private TableView<ExpensesDto> tblExpenses;
 
 //    ExpensesDAO expensesDAO = new ExpensesDAOImpl();
-    ExpensesBO expensesBO = (ExpensesBO) BOFactory.getInstance().getBO(BOFactory.BOType.EXPENSES);
+    ExpensesBO expensesBO = (ExpensesBO) BOFactory.getInstance().getBO(BOTypes.EXPENSES);
 
     public void initialize(){
         colExpensesId.setCellValueFactory(new PropertyValueFactory<>("expenseId"));

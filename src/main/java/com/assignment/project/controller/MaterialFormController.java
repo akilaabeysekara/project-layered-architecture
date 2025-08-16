@@ -1,6 +1,7 @@
 package com.assignment.project.controller;
 
 import com.assignment.project.bo.BOFactory;
+import com.assignment.project.bo.BOTypes;
 import com.assignment.project.bo.custom.MaterialBO;
 import com.assignment.project.dto.MaterialDto;
 import com.jfoenix.controls.JFXButton;
@@ -29,7 +30,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MaterialFormController implements Initializable {
-    MaterialBO materialBO = (MaterialBO) BOFactory.getInstance().getBO(BOFactory.BOType.MATERIAL);
+    MaterialBO materialBO = (MaterialBO) BOFactory.getInstance().getBO(BOTypes.MATERIAL);
 //    MaterialDAO materialDAO = new MaterialDAOImpl();
 
     @FXML
