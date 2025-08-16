@@ -30,8 +30,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SupplierFormController implements Initializable {
-    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOTypes.SUPPLIER);
-//    SupplierDAOImpl supplierDAOImpl = new SupplierDAOImpl();
+    private final SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOTypes.SUPPLIER);
 
     @FXML
     private JFXButton btnSupplierDelete;
@@ -94,13 +93,12 @@ public class SupplierFormController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this Supplier?", ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> buttonType = alert.showAndWait();
 
-            if(buttonType.get() == ButtonType.YES){
+            if (buttonType.isPresent() && buttonType.get() == ButtonType.YES) {
                 boolean isDeleted = supplierBO.deleteSupplier(supplierId);
 
                 if (isDeleted) {
                     new Alert(Alert.AlertType.INFORMATION, "Supplier deleted successfully!").show();
                     refreshPage();
-                    resetFieldStyles();
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Failed to delete supplier.").show();
                 }
@@ -127,27 +125,57 @@ public class SupplierFormController implements Initializable {
             stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error loading supplier table.").show();
         }
     }
 
     @FXML
-    void onSaveSupplier(ActionEvent event) throws SQLException {
+    void onSaveSupplier(ActionEvent event) {
         String supplierId = lblSupplierID.getText();
         String supplierName = txtSupplierName.getText();
         String supplierAddress = txtSupplierAddress.getText();
         String supplierPhoneNo = txtSupplierPhoneNo.getText();
         String supplierEmail = txtSupplierEmail.getText();
 
-        if(validation(supplierName, supplierAddress, supplierPhoneNo, supplierEmail)) {
-            SupplierDto supplierDto = new SupplierDto(supplierId, supplierName, supplierAddress, supplierPhoneNo, supplierEmail);
+        String namePattern = "^[A-Za-z ]+$";
+        String addressPattern = "^[A-Za-z0-9 ,.-]+$";
+        String phonePattern = "^\\d{10}$";
+        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
-            boolean isSaved = supplierBO.saveSupplier(supplierDto);
-            if (isSaved) {
-                new Alert(Alert.AlertType.INFORMATION, "Supplier saved...!").show();
-                refreshPage();
-                resetFieldStyles();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Fail to save Supplier...!").show();
+        boolean isValidName = supplierName.matches(namePattern);
+        boolean isValidAddress = supplierAddress.matches(addressPattern);
+        boolean isValidPhone = supplierPhoneNo.matches(phonePattern);
+        boolean isValidEmail = supplierEmail.matches(emailPattern);
+
+        resetFieldStyles();
+
+        if (!isValidName) {
+            txtSupplierName.setStyle("-fx-border-color: red;");
+        }
+        if (!isValidAddress) {
+            txtSupplierAddress.setStyle("-fx-border-color: red;");
+        }
+        if (!isValidPhone) {
+            txtSupplierPhoneNo.setStyle("-fx-border-color: red;");
+        }
+        if (!isValidEmail) {
+            txtSupplierEmail.setStyle("-fx-border-color: red;");
+        }
+
+        if (isValidName && isValidAddress && isValidPhone && isValidEmail) {
+            try {
+                SupplierDto supplierDto = new SupplierDto(supplierId, supplierName, supplierAddress, supplierPhoneNo, supplierEmail);
+                boolean isSaved = supplierBO.saveSupplier(supplierDto);
+
+                if (isSaved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Supplier saved successfully!").show();
+                    refreshPage();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Failed to save supplier!").show();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Error saving supplier.").show();
             }
         } else {
             new Alert(Alert.AlertType.ERROR, "Please fix the highlighted fields.").show();
@@ -155,8 +183,13 @@ public class SupplierFormController implements Initializable {
     }
 
     @FXML
-    void onSupplierResetAction(ActionEvent event) throws SQLException {
-        refreshPage();
+    void onSupplierResetAction(ActionEvent event) {
+        try {
+            refreshPage();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error resetting form.").show();
+        }
     }
 
     @FXML
@@ -167,7 +200,32 @@ public class SupplierFormController implements Initializable {
         String supplierPhoneNo = txtSupplierPhoneNo.getText();
         String supplierEmail = txtSupplierEmail.getText();
 
-        if(validation(supplierName, supplierAddress, supplierPhoneNo, supplierEmail)) {
+        String namePattern = "^[A-Za-z ]+$";
+        String addressPattern = "^[A-Za-z0-9 ,.-]+$";
+        String phonePattern = "^\\d{10}$";
+        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+
+        boolean isValidName = supplierName.matches(namePattern);
+        boolean isValidAddress = supplierAddress.matches(addressPattern);
+        boolean isValidPhone = supplierPhoneNo.matches(phonePattern);
+        boolean isValidEmail = supplierEmail.matches(emailPattern);
+
+        resetFieldStyles();
+
+        if (!isValidName) {
+            txtSupplierName.setStyle("-fx-border-color: red;");
+        }
+        if (!isValidAddress) {
+            txtSupplierAddress.setStyle("-fx-border-color: red;");
+        }
+        if (!isValidPhone) {
+            txtSupplierPhoneNo.setStyle("-fx-border-color: red;");
+        }
+        if (!isValidEmail) {
+            txtSupplierEmail.setStyle("-fx-border-color: red;");
+        }
+
+        if (isValidName && isValidAddress && isValidPhone && isValidEmail) {
             try {
                 SupplierDto supplierDto = new SupplierDto(supplierId, supplierName, supplierAddress, supplierPhoneNo, supplierEmail);
                 boolean isUpdated = supplierBO.updateSupplier(supplierDto);
@@ -176,49 +234,15 @@ public class SupplierFormController implements Initializable {
                     new Alert(Alert.AlertType.INFORMATION, "Supplier updated successfully!").show();
                     refreshPage();
                 } else {
-                    new Alert(Alert.AlertType.ERROR, "Failed to update Supplier.").show();
+                    new Alert(Alert.AlertType.ERROR, "Failed to update supplier.").show();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Error occurred while updating Supplier.").show();
+                new Alert(Alert.AlertType.ERROR, "Error updating supplier.").show();
             }
         } else {
             new Alert(Alert.AlertType.ERROR, "Please fix the highlighted fields.").show();
         }
-    }
-
-    private boolean validation(String supplierName, String supplierAddress, String supplierPhoneNo, String supplierEmail){
-        String validPattern = "^(?=.*[a-zA-Z])[a-zA-Z0-9]{1,150}$";
-        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-        String phonePattern = "^(\\d+)||((\\d+\\.)(\\d){2})$";
-
-        boolean isValidName = supplierName.matches(validPattern);
-        boolean isValidAddress = supplierAddress.matches(validPattern);
-        boolean isValidPhone = supplierPhoneNo.matches(phonePattern);
-        boolean isvalidEmail = supplierEmail.matches(emailPattern);
-
-        txtSupplierName.setStyle(txtSupplierName.getStyle() + ";-fx-border-color: #7367F0;");
-        txtSupplierAddress.setStyle(txtSupplierAddress.getStyle() + ";-fx-border-color: #7367F0;");
-        txtSupplierPhoneNo.setStyle(txtSupplierPhoneNo.getStyle() + ";-fx-border-color: #7367F0;");
-        txtSupplierEmail.setStyle(txtSupplierEmail.getStyle() + ";-fx-border-color: #7367F0;");
-
-        if (!isValidName) {
-            txtSupplierName.setStyle(txtSupplierName.getStyle() + ";-fx-border-color: red;");
-        }
-
-        if (!isValidAddress) {
-            txtSupplierAddress.setStyle(txtSupplierAddress.getStyle() + ";-fx-border-color: red;");
-        }
-
-        if (!isValidPhone) {
-            txtSupplierPhoneNo.setStyle(txtSupplierPhoneNo.getStyle() + ";-fx-border-color: red;");
-        }
-
-        if (!isvalidEmail) {
-            txtSupplierEmail.setStyle(txtSupplierEmail.getStyle() + ";-fx-border-color: red;");
-        }
-
-        return isValidName && isValidAddress && isValidPhone && isvalidEmail;
     }
 
     @Override
@@ -226,7 +250,8 @@ public class SupplierFormController implements Initializable {
         try {
             refreshPage();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error initializing form.").show();
         }
     }
 
@@ -237,12 +262,11 @@ public class SupplierFormController implements Initializable {
         loadSupplierIds();
 
         cmbSupplierId.getSelectionModel().clearSelection();
-        lblSupplierID.setText("");
         txtSupplierName.clear();
         txtSupplierPhoneNo.clear();
         txtSupplierEmail.clear();
         txtSupplierAddress.clear();
-        lblSupplierID.setText(nextSupplierId);
+
         resetFieldStyles();
 
         btnSupplierSave.setDisable(false);
@@ -250,17 +274,16 @@ public class SupplierFormController implements Initializable {
         btnSupplierDelete.setDisable(true);
     }
 
-    private void resetFieldStyles(){
-        txtSupplierName.setStyle("-fx-border-color: transparent;");
-        txtSupplierAddress.setStyle("-fx-border-color: transparent;");
-        txtSupplierPhoneNo.setStyle("-fx-border-color: transparent;");
-        txtSupplierEmail.setStyle("-fx-border-color: transparent;");
+    private void resetFieldStyles() {
+        txtSupplierName.setStyle("-fx-border-color: #7367F0;");
+        txtSupplierAddress.setStyle("-fx-border-color: #7367F0;");
+        txtSupplierPhoneNo.setStyle("-fx-border-color: #7367F0;");
+        txtSupplierEmail.setStyle("-fx-border-color: #7367F0;");
     }
 
     private void loadSupplierIds() throws SQLException {
         ArrayList<String> supplierIds = supplierBO.getAllSupplierIds();
-        ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.addAll(supplierIds);
+        ObservableList<String> observableList = FXCollections.observableArrayList(supplierIds);
         cmbSupplierId.setItems(observableList);
     }
 }

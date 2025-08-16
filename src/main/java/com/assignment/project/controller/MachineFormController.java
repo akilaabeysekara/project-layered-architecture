@@ -30,8 +30,7 @@ import java.util.ResourceBundle;
 
 public class MachineFormController implements Initializable {
 
-    MachineBO machineBO = (MachineBO) BOFactory.getInstance().getBO(BOTypes.MACHINE);
-//    MachineDAO machineDAO = new MachineDAOImpl();
+    private final MachineBO machineBO = (MachineBO) BOFactory.getInstance().getBO(BOTypes.MACHINE);
 
     @FXML
     private JFXButton btnMachineDelete;
@@ -74,7 +73,6 @@ public class MachineFormController implements Initializable {
 
                 btnMachineUpdate.setDisable(false);
                 btnMachineDelete.setDisable(false);
-
                 btnMachineSave.setDisable(true);
             }
         }
@@ -88,8 +86,7 @@ public class MachineFormController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this machine?", ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> buttonType = alert.showAndWait();
 
-
-            if(buttonType.get() == ButtonType.YES){
+            if (buttonType.get() == ButtonType.YES) {
                 boolean isDeleted = machineBO.deleteMachine(machineID);
 
                 if (isDeleted) {
@@ -99,10 +96,9 @@ public class MachineFormController implements Initializable {
                     new Alert(Alert.AlertType.ERROR, "Failed to delete machine.").show();
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Error occurred while deleting client.").show();
+            new Alert(Alert.AlertType.ERROR, "Error occurred while deleting machine.").show();
         }
     }
 
@@ -122,6 +118,7 @@ public class MachineFormController implements Initializable {
             stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error loading machine table.").show();
         }
     }
 
@@ -131,37 +128,82 @@ public class MachineFormController implements Initializable {
     }
 
     @FXML
-    void onSaveMachine(ActionEvent event) throws SQLException {
+    void onSaveMachine(ActionEvent event) {
         String machineId = lblMachineID.getText();
         String machineName = txtMachineName.getText();
         String machineStatus = txtMachineStatus.getText();
         String machineDescription = txtMachineDescription.getText();
 
-        if (validation(machineName, machineStatus, machineDescription)) {
-            MachineDto machineDto = new MachineDto(machineId, machineName, machineStatus, machineDescription);
+        String namePattern = "^[A-Za-z ]+$";
+        String statusPattern = "^[A-Za-z0-9 ]+$";
+        String descriptionPattern = "^[A-Za-z0-9 ,.()-]+$";
 
-            boolean isSaved = machineBO.saveMachine(machineDto);
+        boolean isValidName = machineName.matches(namePattern);
+        boolean isValidStatus = machineStatus.matches(statusPattern);
+        boolean isValidDescription = machineDescription.matches(descriptionPattern);
 
-            if (isSaved) {
-                new Alert(Alert.AlertType.INFORMATION, "Machine saved...!").show();
-                refreshPage();
-                resetFieldStyles();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Fail to save Machine...!").show();
+        resetFieldStyles();
+
+        if (!isValidName) {
+            txtMachineName.setStyle(txtMachineName.getStyle() + ";-fx-border-color: red;");
+        }
+
+        if (!isValidStatus) {
+            txtMachineStatus.setStyle(txtMachineStatus.getStyle() + ";-fx-border-color: red;");
+        }
+
+        if (!isValidDescription) {
+            txtMachineDescription.setStyle(txtMachineDescription.getStyle() + ";-fx-border-color: red;");
+        }
+
+        if (isValidName && isValidStatus && isValidDescription) {
+            try {
+                MachineDto machineDto = new MachineDto(machineId, machineName, machineStatus, machineDescription);
+                boolean isSaved = machineBO.saveMachine(machineDto);
+
+                if (isSaved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Machine saved successfully!").show();
+                    refreshPage();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Failed to save machine!").show();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Error saving machine.").show();
             }
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Please fix the highlighted fields.").show();
         }
     }
 
     @FXML
-    void onUpdateMachine(ActionEvent event) throws SQLException {
+    void onUpdateMachine(ActionEvent event) {
         String machineId = lblMachineID.getText();
         String machineName = txtMachineName.getText();
         String machineStatus = txtMachineStatus.getText();
         String machineDescription = txtMachineDescription.getText();
 
-        if (validation(machineName, machineStatus, machineDescription)) {
+        String namePattern = "^[A-Za-z ]+$";
+        String statusPattern = "^[A-Za-z0-9 ]+$";
+        String descriptionPattern = "^[A-Za-z0-9 ,.()-]+$";
+
+        boolean isValidName = machineName.matches(namePattern);
+        boolean isValidStatus = machineStatus.matches(statusPattern);
+        boolean isValidDescription = machineDescription.matches(descriptionPattern);
+
+        resetFieldStyles();
+
+        if (!isValidName) {
+            txtMachineName.setStyle(txtMachineName.getStyle() + ";-fx-border-color: red;");
+        }
+
+        if (!isValidStatus) {
+            txtMachineStatus.setStyle(txtMachineStatus.getStyle() + ";-fx-border-color: red;");
+        }
+
+        if (!isValidDescription) {
+            txtMachineDescription.setStyle(txtMachineDescription.getStyle() + ";-fx-border-color: red;");
+        }
+
+        if (isValidName && isValidStatus && isValidDescription) {
             try {
                 MachineDto machineDto = new MachineDto(machineId, machineName, machineStatus, machineDescription);
                 boolean isUpdated = machineBO.updateMachine(machineDto);
@@ -170,41 +212,14 @@ public class MachineFormController implements Initializable {
                     new Alert(Alert.AlertType.INFORMATION, "Machine updated successfully!").show();
                     refreshPage();
                 } else {
-                    new Alert(Alert.AlertType.ERROR, "Failed to update Machine.").show();
+                    new Alert(Alert.AlertType.ERROR, "Failed to update machine.").show();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Error occurred while updating Machine.").show();
+                new Alert(Alert.AlertType.ERROR, "Error updating machine.").show();
             }
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Please fix the highlighted fields.").show();
         }
     }
-
-    private boolean validation(String machineName, String machineStatus, String machineDescription) {
-        String validPattern = "^(?=.*[a-zA-Z])[a-zA-Z0-9]{1,150}$";
-
-        boolean isValidName = machineName.matches(validPattern);
-        boolean isValidStatus = machineStatus.matches(validPattern);
-        boolean isValidDescription = machineDescription.matches(validPattern);
-
-        txtMachineName.setStyle(txtMachineName.getStyle() + ";-fx-border-color: #7367F0;");
-        txtMachineStatus.setStyle(txtMachineStatus.getStyle() + ";-fx-border-color: #7367F0;");
-        txtMachineDescription.setStyle(txtMachineDescription.getStyle() + ";-fx-border-color: #7367F0;");
-
-        if (!isValidName) {
-            txtMachineName.setStyle(txtMachineName.getStyle() + ";-fx-border-color: red;");
-        }
-        if (!isValidStatus) {
-            txtMachineStatus.setStyle(txtMachineStatus.getStyle() + ";-fx-border-color: red;");
-        }
-        if (!isValidDescription) {
-            txtMachineDescription.setStyle(txtMachineDescription.getStyle() + ";-fx-border-color: red;");
-        }
-
-        return isValidName && isValidStatus && isValidDescription;
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -226,8 +241,6 @@ public class MachineFormController implements Initializable {
         txtMachineStatus.clear();
         txtMachineDescription.clear();
 
-        lblMachineID.setText(nextMachineID);
-
         resetFieldStyles();
 
         btnMachineSave.setDisable(false);
@@ -237,15 +250,13 @@ public class MachineFormController implements Initializable {
 
     private void loadMachineIds() throws SQLException {
         ArrayList<String> machineIds = machineBO.getAllMachineIds();
-        ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.addAll(machineIds);
+        ObservableList<String> observableList = FXCollections.observableArrayList(machineIds);
         cmbMachineId.setItems(observableList);
     }
 
     private void resetFieldStyles() {
-        txtMachineName.setStyle("-fx-border-color: transparent;");
-        txtMachineStatus.setStyle("-fx-border-color: transparent;");
-        txtMachineDescription.setStyle("-fx-border-color: transparent;");
+        txtMachineName.setStyle("-fx-border-color: #7367F0;");
+        txtMachineStatus.setStyle("-fx-border-color: #7367F0;");
+        txtMachineDescription.setStyle("-fx-border-color: #7367F0;");
     }
-
 }
